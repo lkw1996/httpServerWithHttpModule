@@ -28,6 +28,7 @@ const posts = [
   },
 ];
 
+// #1 유저 회원가입 하기
 const createUser = (req, res) => {
   const user = req.body.user;
 
@@ -45,6 +46,7 @@ const createUser = (req, res) => {
   res.status(200).json();
 };
 
+// #2 게시글 등록하기
 const createPost = (req, res) => {
   const post = req.body.post;
 
@@ -62,4 +64,21 @@ const createPost = (req, res) => {
   res.status(200).json();
 };
 
-module.exports = { createUser, createPost };
+// #3 게시글 목록 조회하기
+const showPost = (req, res) => {
+  const postsWithUserName = posts.map((post) => {
+    const user = users.find((user) => post.userId === user.id);
+
+    return {
+      postId: post.id,
+      postTitle: post.title,
+      postContent: post.content,
+      userId: post.userId,
+      userName: user.name,
+    };
+  });
+
+  res.json({ data: postsWithUserName });
+};
+
+module.exports = { createUser, createPost, showPost };
