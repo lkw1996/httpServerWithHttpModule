@@ -48,7 +48,7 @@ const createUser = (req, res) => {
 
 // #2 게시글 등록하기
 const createPost = (req, res) => {
-  const post = req.body.post;
+  const post = req.body.data;
 
   posts.push({
     id: post.id,
@@ -81,4 +81,24 @@ const showPost = (req, res) => {
   res.json({ data: postsWithUserName });
 };
 
-module.exports = { createUser, createPost, showPost };
+// #4 게시글 수정하기
+const modifyPost = (req, res) => {
+  const { id, content } = req.body;
+
+  const post = posts.find((post) => post.id === id);
+  post.content = content;
+
+  const user = users.find((user) => post.userId === user.id);
+
+  const updatedPost = {
+    userId: post.id,
+    userName: user.name,
+    postingId: id,
+    postingTitle: post.title,
+    postingContent: content,
+  };
+
+  res.json({ data: updatedPost });
+};
+
+module.exports = { createUser, createPost, showPost, modifyPost };

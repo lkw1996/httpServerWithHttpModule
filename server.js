@@ -3,6 +3,7 @@ const express = require("express");
 const { createUser } = require("./app");
 const { createPost } = require("./app");
 const { showPost } = require("./app");
+const { modifyPost } = require("./app");
 
 const app = express();
 app.use(express.json());
@@ -10,7 +11,7 @@ app.use(express.json());
 app.post("/signup", createUser);
 app.post("/post", createPost);
 app.get("/showPost", showPost);
-// app.patch("/modifyPost", modifyPost);
+app.patch("/modifyPost", modifyPost);
 
 const server = http.createServer(app);
 
